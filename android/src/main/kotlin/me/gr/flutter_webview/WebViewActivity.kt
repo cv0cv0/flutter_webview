@@ -2,13 +2,11 @@ package me.gr.flutter_webview
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
-import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 
 class WebViewActivity : Activity() {
     private lateinit var webView: WebView
@@ -34,6 +32,10 @@ class WebViewActivity : Activity() {
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 return false
+            }
+
+            override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+                handler?.proceed()
             }
         }
 
